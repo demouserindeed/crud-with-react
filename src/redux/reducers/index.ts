@@ -1,38 +1,32 @@
-import { FormProps, ReducerAction, initialStateType } from '../../types/types';
+import { initialStateType } from '../../types/types';
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState: initialStateType = {
   records: [],
 };
 
-const reducer = (
-  state: initialStateType = initialState,
-  action: ReducerAction,
-): initialStateType => {
-  switch (action.type) {
-    case 'add':
-      return {
-        ...state,
-        records: [...state.records, action.payload.newRecord as FormProps],
-      };
-    case 'update':
-      const { id, updatedRecord } = action.payload;
-      return {
-        ...state,
-        records: state.records.map((record) =>
-          record.id === id ? (updatedRecord as FormProps) : record,
-        ),
-      };
-    case 'delete':
-      const updatedRecordArr = state.records.filter(
-        (record) => record.id !== action.payload.id,
+const recordReducerSlice = createSlice({
+  name: 'recordSlice',
+  initialState,
+  reducers: {
+    ADD_RECORD(state, action) {
+      console.log('payload===', action);
+      state.records = [...state.records, action.payload];
+    },
+    UPDATE_RECORD(state, action) {
+      const { id, updatedData } = action.payload;
+      state.records = state.records.map((record) =>
+        record.id === id ? updatedData : record,
       );
-      return {
-        ...state,
-        records: updatedRecordArr,
-      };
-    default:
-      return state;
-  }
-};
+    },
+    DELETE_RECORD(state, action) {
+      state.records = state.records.filter(
+        (record) => record.id !== action.payload,
+      );
+    },
+  },
+});
 
-export default reducer;
+export const { DELETE_RECORD, ADD_RECORD, UPDATE_RECORD } =
+  recordReducerSlice.actions;
+export default recordReducerSlice.reducer;

@@ -1,5 +1,5 @@
 import { FormElements, defaultFormData } from '../constants/constants';
-import { DELETE_RECORD } from '../redux/actions/actions';
+import { DELETE_RECORD } from '../redux/reducers';
 import { FormProps } from '../types/types';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
