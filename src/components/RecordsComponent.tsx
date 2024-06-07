@@ -1,22 +1,20 @@
 import { FormElements, defaultFormData } from '../constants/constants';
+import { DELETE_RECORD } from '../redux/actions/actions';
 import { FormProps } from '../types/types';
 import { ChangeEvent, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 type RecordsParam = {
   records: FormProps[];
-  handleDelete: (id: string) => void;
   handleUpdate: (id: string, updatedData: FormProps) => void;
 };
 
-export const RecordsComponent = ({
-  records,
-  handleDelete,
-  handleUpdate,
-}: RecordsParam) => {
+export const RecordsComponent = ({ records, handleUpdate }: RecordsParam) => {
   const [updateId, setUpdateId] = useState<string>();
   const [updatedFormValues, setUpdatedFormValues] = useState(
     defaultFormData as FormProps,
   );
+  const dispatch = useDispatch();
 
   const changeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value, files } = event.target;
@@ -110,7 +108,10 @@ export const RecordsComponent = ({
                   </button>
                 </td>
                 <td>
-                  <button type="button" onClick={() => handleDelete(record.id)}>
+                  <button
+                    type="button"
+                    onClick={() => dispatch(DELETE_RECORD(record.id))}
+                  >
                     Delete
                   </button>
                 </td>

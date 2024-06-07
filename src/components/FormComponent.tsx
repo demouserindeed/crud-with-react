@@ -1,24 +1,15 @@
 import { ChangeEvent, useState, useRef, Fragment } from 'react';
-import { FormProps } from '../types/types';
+import { FormProps, initialStateType } from '../types/types';
 import { RecordsComponent } from './RecordsComponent';
 import { FormElements, defaultFormData } from '../constants/constants';
+import { useDispatch, useSelector } from 'react-redux';
+import { ADD_RECORD, UPDATE_RECORD } from '../redux/actions/actions';
 
 export default function FormComponent() {
   const [formData, setFormData] = useState(defaultFormData as FormProps);
-
-  const [records, setRecords] = useState<FormProps[]>([]);
-
-  const handleDelete = (id: string) => {
-    const newRecords = records.filter((record) => record.id !== id);
-    setRecords(newRecords);
-  };
-  const handleUpdate = (id: string, updatedData: FormProps) => {
-    const tempRecords = JSON.parse(JSON.stringify(records));
-    const recordIndex = records.findIndex((item) => item.id === id);
-
-    tempRecords[recordIndex] = updatedData;
-    setRecords(tempRecords);
-  };
+  const photoRef = useRef<HTMLInputElement>(null);
+  const dispatch = useDispatch();
+  const records = useSelector((state: initialStateType) => state.records);
 
   const changeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value, files } = event.target;
@@ -41,21 +32,14 @@ export default function FormComponent() {
   };
 
   const saveRecord = () => {
-    setRecords((prev) => [
-      ...prev,
-      {
-        ...formData,
-        id: Math.random().toString(),
-      },
-    ]);
+    const newRecordWithId = { ...formData, id: Math.random().toString() };
+    dispatch(ADD_RECORD(newRecordWithId));
     setFormData(defaultFormData as FormProps);
 
     if (photoRef.current) {
       photoRef.current.value = '';
     }
   };
-
-  const photoRef = useRef<HTMLInputElement>(null);
 
   return (
     <>
@@ -122,8 +106,9 @@ export default function FormComponent() {
         <h1>Records</h1>
         <RecordsComponent
           records={records}
-          handleDelete={handleDelete}
-          handleUpdate={handleUpdate}
+          handleUpdate={(id, updatedData) =>
+            dispatch(UPDATE_RECORD(id, updatedData))
+          }
         />
       </div>
     </>
