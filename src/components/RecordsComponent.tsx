@@ -46,7 +46,7 @@ export const RecordsComponent = ({
   }, [updateId, records]);
   return (
     <div>
-      <table style={{ width: '100%' }}>
+      <table style={{ width: '100%', textAlign: 'center' }}>
         <thead>
           <tr>
             <th>Name</th>
