@@ -1,0 +1,16 @@
+.navbar {
+  ul {
+    list-style-type: none;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    padding-left: 0;
+    background-color: #2ac4ea;
+    padding: 10px;
+    margin-top: 0;
+  }
+  a {
+    text-decoration: none;
+    color: white;
+  }
+}
