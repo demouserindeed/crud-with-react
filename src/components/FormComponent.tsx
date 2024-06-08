@@ -1,15 +1,13 @@
 import { ChangeEvent, useState, useRef, Fragment } from 'react';
-import { FormProps, initialStateType } from '../types/types';
-import { RecordsComponent } from './RecordsComponent';
+import { FormProps } from '../types/types';
 import { FormElements, defaultFormData } from '../constants/constants';
-import { useDispatch, useSelector } from 'react-redux';
-import { ADD_RECORD, UPDATE_RECORD } from '../redux/actions/actions';
 
-export default function FormComponent() {
+type FormComponentProps = {
+  addNewRecord: (data: FormProps) => void;
+};
+export default function FormComponent({ addNewRecord }: FormComponentProps) {
   const [formData, setFormData] = useState(defaultFormData as FormProps);
   const photoRef = useRef<HTMLInputElement>(null);
-  const dispatch = useDispatch();
-  const records = useSelector((state: initialStateType) => state.records);
 
   const changeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value, files } = event.target;
@@ -33,7 +31,7 @@ export default function FormComponent() {
 
   const saveRecord = () => {
     const newRecordWithId = { ...formData, id: Math.random().toString() };
-    dispatch(ADD_RECORD(newRecordWithId));
+    addNewRecord(newRecordWithId);
     setFormData(defaultFormData as FormProps);
 
     if (photoRef.current) {
@@ -100,16 +98,6 @@ export default function FormComponent() {
             </button>
           </form>
         </div>
-      </div>
-
-      <div style={{ textAlign: 'center' }}>
-        <h1>Records</h1>
-        <RecordsComponent
-          records={records}
-          handleUpdate={(id, updatedData) =>
-            dispatch(UPDATE_RECORD(id, updatedData))
-          }
-        />
       </div>
     </>
   );
