@@ -1,3 +1,5 @@
+import { SetStateAction, Dispatch } from 'react';
+
 export type FormProps = {
   name: string;
   email: string;
@@ -17,4 +19,9 @@ export type ReducerAction = {
 
 export type initialStateType = {
   records: FormProps[];
+};
+
+export type AuthenticationContextType = {
+  isAuthenticated: boolean;
+  setIsAuthenticated: Dispatch<SetStateAction<boolean>>;
 };

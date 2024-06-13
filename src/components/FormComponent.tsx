@@ -1,11 +1,12 @@
 import { ChangeEvent, useState, useRef, Fragment } from 'react';
 import { FormProps } from '../types/types';
 import { FormElements, defaultFormData } from '../constants/constants';
+import WithAuthHoc from './WithAuthHoc/WithAuthHoc';
 
 type FormComponentProps = {
   addNewRecord: (data: FormProps) => void;
 };
-export default function FormComponent({ addNewRecord }: FormComponentProps) {
+function FormComponent({ addNewRecord }: FormComponentProps) {
   const [formData, setFormData] = useState(defaultFormData as FormProps);
   const photoRef = useRef<HTMLInputElement>(null);
 
@@ -102,3 +103,5 @@ export default function FormComponent({ addNewRecord }: FormComponentProps) {
     </>
   );
 }
+
+export default WithAuthHoc(FormComponent);
