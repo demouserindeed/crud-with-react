@@ -1,17 +1,15 @@
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './NavBar.module.css';
-import { useContext } from 'react';
-import { AuthenticationContext } from '../AuthContext/AuthContext';
 import WithAuthHoc from '../WithAuthHoc/WithAuthHoc';
+import useHelperHook from '../../CustomHooks/useHelperHook';
 
 const NavBar = () => {
   const navigate = useNavigate();
-  const authdata = useContext(AuthenticationContext);
-
+  const { logout } = useHelperHook();
   const handleLogout = () => {
     localStorage.removeItem('email');
     localStorage.removeItem('password');
-    authdata?.setIsAuthenticated(false);
+    logout();
     navigate('/crud-with-react');
   };
 

@@ -21,6 +21,11 @@ export type initialStateType = {
   records: FormProps[];
 };
 
+export type finalStateType = {
+  FormReducer: initialStateType;
+  LoginReducer: boolean;
+};
+
 export type AuthenticationContextType = {
   isAuthenticated: boolean;
   setIsAuthenticated: Dispatch<SetStateAction<boolean>>;

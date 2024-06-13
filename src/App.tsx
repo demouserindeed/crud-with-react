@@ -3,7 +3,6 @@ import useHelperHook from './CustomHooks/useHelperHook';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import RootLayout from './pages/RootLayout';
 import Login from './pages/Login/Login';
-import AuthContext from './components/AuthContext/AuthContext';
 import { lazy, Suspense } from 'react';
 import { waitfor } from './utils/helpers';
 
@@ -39,9 +38,7 @@ function App() {
   ]);
   return (
     <Suspense fallback={<h1>Loading...</h1>}>
-      <AuthContext>
-        <RouterProvider router={router} />
-      </AuthContext>
+      <RouterProvider router={router} />
     </Suspense>
   );
 }

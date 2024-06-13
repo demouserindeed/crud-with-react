@@ -1,8 +1,7 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './Login.module.css';
 import { useNavigate } from 'react-router-dom';
-import { AuthenticationContext } from '../../components/AuthContext/AuthContext';
-import { AuthenticationContextType } from '../../types/types';
+import useHelperHook from '../../CustomHooks/useHelperHook';
 
 type Cred = {
   email: string;
@@ -16,22 +15,20 @@ const Login = () => {
   });
 
   const navigate = useNavigate();
-  const authData = useContext<AuthenticationContextType | undefined>(
-    AuthenticationContext,
-  );
+  const { login, loginStatus } = useHelperHook();
 
   const handleLogin = () => {
     localStorage.setItem('email', `${cred.email}`);
     localStorage.setItem('password', `${cred.password}`);
-    authData?.setIsAuthenticated(true);
+    login();
     navigate('/crud-with-react/main');
   };
 
   useEffect(() => {
-    if (localStorage.getItem('email') !== null) {
+    if (loginStatus) {
       navigate('/crud-with-react/main');
     }
-  }, []);
+  }, [loginStatus]);
 
   return (
     <div className={styles.login}>

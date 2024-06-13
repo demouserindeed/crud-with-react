@@ -24,3 +24,15 @@ export const DELETE_RECORD = (id: string) => {
     },
   };
 };
+
+export const LOGIN = () => {
+  return {
+    type: 'login',
+  };
+};
+
+export const LOGOUT = () => {
+  return {
+    type: 'logout',
+  };
+};
