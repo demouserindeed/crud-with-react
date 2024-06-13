@@ -29,9 +29,15 @@ const Login = () => {
 
   useEffect(() => {
     if (localStorage.getItem('email') !== null) {
-      navigate('/crud-with-react/main');
+      authData?.setIsAuthenticated(true);
     }
   }, []);
+
+  useEffect(() => {
+    if (authData?.isAuthenticated) {
+      navigate('/crud-with-react/main');
+    }
+  }, [authData?.isAuthenticated]);
 
   return (
     <div className={styles.login}>

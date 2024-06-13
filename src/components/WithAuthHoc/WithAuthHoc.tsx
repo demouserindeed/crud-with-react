@@ -1,22 +1,17 @@
-import { ComponentType, useContext, useEffect } from 'react';
+import { ComponentType, useContext } from 'react';
 import { AuthenticationContext } from '../AuthContext/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 const WithAuthHoc = <P extends object>(WrappedComponent: ComponentType<P>) => {
-  const AuthWrapper: React.FC<P> = (props) => {
+  return (props: P) => {
     const authData = useContext(AuthenticationContext);
-    const navigate = useNavigate();
 
-    useEffect(() => {
-      if (!authData?.isAuthenticated) {
-        navigate('/crud-with-react');
-      }
-    }, []);
+    if (!authData?.isAuthenticated) {
+      return <Navigate to="/crud-with-react" replace />;
+    }
 
     return authData?.isAuthenticated && <WrappedComponent {...props} />;
   };
-
-  return AuthWrapper;
 };
 
 export default WithAuthHoc;
