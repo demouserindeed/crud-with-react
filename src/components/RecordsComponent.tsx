@@ -1,6 +1,7 @@
 import { FormElements, defaultFormData } from '../constants/constants';
 import { FormProps } from '../types/types';
 import { ChangeEvent, useEffect, useState } from 'react';
+import WithAuthHoc from './WithAuthHoc/WithAuthHoc';
 
 type RecordsParam = {
   records: FormProps[];
@@ -8,7 +9,7 @@ type RecordsParam = {
   deleteRecord: (id: string) => void;
 };
 
-export const RecordsComponent = ({
+const RecordsComponent = ({
   records,
   handleUpdate,
   deleteRecord,
@@ -54,71 +55,86 @@ export const RecordsComponent = ({
             <th>Phone</th>
             <th>Photo</th>
           </tr>
-          {records.map((record, index) =>
-            updateId && record.id === updateId ? (
-              <tr key={index}>
-                {FormElements.map((element) =>
-                  element.name === 'photo' ? (
-                    <td key={`updated_${element.id}`}>
-                      <input
-                        id={`updated_${element.id}`}
-                        type={element.type}
-                        name={element.name}
-                        onChange={changeHandler}
-                      />
-                    </td>
-                  ) : (
-                    <td key={`updated_${element.id}`}>
-                      <input
-                        id={`updated_${element.id}`}
-                        type={element.type}
-                        name={element.name}
-                        placeholder={element.placeholder}
-                        onChange={changeHandler}
-                        value={
-                          updatedFormValues[
-                            element.name as keyof typeof updatedFormValues
-                          ]
-                        }
-                      />
-                    </td>
-                  ),
-                )}
-                <td>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      handleUpdate(updateId, updatedFormValues);
-                      setUpdateId('');
-                    }}
-                  >
-                    Save
-                  </button>
-                </td>
-              </tr>
-            ) : (
-              <tr key={index}>
-                <td>{record.name}</td>
-                <td>{record.email}</td>
-                <td>{record.phone}</td>
-                <td>
-                  <img src={record.photo} width="40px" height="40px" />
-                </td>
-                <td>
-                  <button type="button" onClick={() => setUpdateId(record.id)}>
-                    Update
-                  </button>
-                </td>
-                <td>
-                  <button type="button" onClick={() => deleteRecord(record.id)}>
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ),
-          )}
         </thead>
+        <tbody>
+          {records.length === 0 ? (
+            <tr>
+              <td colSpan={4}>NO RECORDS FOUND</td>
+            </tr>
+          ) : (
+            records.map((record, index) =>
+              updateId && record.id === updateId ? (
+                <tr key={index}>
+                  {FormElements.map((element) =>
+                    element.name === 'photo' ? (
+                      <td key={`updated_${element.id}`}>
+                        <input
+                          id={`updated_${element.id}`}
+                          type={element.type}
+                          name={element.name}
+                          onChange={changeHandler}
+                        />
+                      </td>
+                    ) : (
+                      <td key={`updated_${element.id}`}>
+                        <input
+                          id={`updated_${element.id}`}
+                          type={element.type}
+                          name={element.name}
+                          placeholder={element.placeholder}
+                          onChange={changeHandler}
+                          value={
+                            updatedFormValues[
+                              element.name as keyof typeof updatedFormValues
+                            ]
+                          }
+                        />
+                      </td>
+                    ),
+                  )}
+                  <td>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        handleUpdate(updateId, updatedFormValues);
+                        setUpdateId('');
+                      }}
+                    >
+                      Save
+                    </button>
+                  </td>
+                </tr>
+              ) : (
+                <tr key={index}>
+                  <td>{record.name}</td>
+                  <td>{record.email}</td>
+                  <td>{record.phone}</td>
+                  <td>
+                    <img src={record.photo} width="40px" height="40px" />
+                  </td>
+                  <td>
+                    <button
+                      type="button"
+                      onClick={() => setUpdateId(record.id)}
+                    >
+                      Update
+                    </button>
+                  </td>
+                  <td>
+                    <button
+                      type="button"
+                      onClick={() => deleteRecord(record.id)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ),
+            )
+          )}
+        </tbody>
       </table>
     </div>
   );
 };
+export default WithAuthHoc(RecordsComponent);
