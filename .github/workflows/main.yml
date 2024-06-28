@@ -24,4 +24,4 @@ jobs:
         with:
           ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages # Change if deploying to a different branch
-          FOLDER: build # Change if build output directory is different
+          FOLDER: dist # Change if build output directory is different
