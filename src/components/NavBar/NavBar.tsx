@@ -25,6 +25,9 @@ const NavBar = () => {
           <Link to="/crud-with-react/main/records">RECORD LIST</Link>
         </li>
         <li>
+          <Link to="/crud-with-react/main/users">USERS</Link>
+        </li>
+        <li>
           <Link to="#" onClick={handleLogout}>
             LOG OUT
           </Link>

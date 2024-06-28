@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import RootLayout from './pages/RootLayout';
 import Login from './pages/Login/Login';
 import AuthContext from './components/AuthContext/AuthContext';
+import { UserTable } from './components/UserTable/UserTable';
 
 function App() {
   const { addNewRecord, updateRecord, deleteRecord, records } = useHelperHook();
@@ -28,6 +29,10 @@ function App() {
               deleteRecord={deleteRecord}
             />
           ),
+        },
+        {
+          path: '/crud-with-react/main/users',
+          element: <UserTable />,
         },
       ],
     },
