@@ -23,5 +23,5 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@3.7.1
         with:
           ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH: gh-pages # Change if deploying to a different branch
+          BRANCH: main # Change if deploying to a different branch
           FOLDER: dist # Change if build output directory is different
